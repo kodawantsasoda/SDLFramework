@@ -1,4 +1,4 @@
-# SDL2-Window-OOP
+# SDLFramework
 Creating a window using SDL2 and C++ in an OOP style format. 
 # Credits
 Some credits need to go to Lazyfoo.net, as well Aether Omar on Youtube for both providing some code and style that was used in this little project
