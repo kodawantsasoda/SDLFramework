@@ -140,11 +140,13 @@
     <ClCompile Include="Loader.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ScreenOrganizer.cpp" />
+    <ClCompile Include="GameEssentials.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameWindow.h" />
     <ClInclude Include="Loader.h" />
     <ClInclude Include="ScreenOrganizer.h" />
+    <ClInclude Include="GameEssentials.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

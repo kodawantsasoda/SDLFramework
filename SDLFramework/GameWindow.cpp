@@ -8,9 +8,11 @@ GameWindow* GameWindow::Instance() {
 
 	//Create a new instance if no instance was created before
 	if (gwInstance == NULL)
+
 		gwInstance = new GameWindow();
 
 	return gwInstance;
+
 }
 
 void GameWindow::Release() {
@@ -19,17 +21,20 @@ void GameWindow::Release() {
 	gwInstance = NULL;
 
 	gwInitialized = false;
+
 }
 
 bool GameWindow::Initialized() {
 
 	return gwInitialized;
+
 }
 
 GameWindow::GameWindow() {
 
 	quitGame = false;
 	gwInitialized = Init();
+
 }
 
 GameWindow::~GameWindow() {
@@ -43,6 +48,7 @@ GameWindow::~GameWindow() {
 
 	SDL_DestroyWindow(gwWindow);
 	gwWindow = NULL;
+
 }
 
 bool GameWindow::Init() {
@@ -82,7 +88,6 @@ bool GameWindow::Init() {
 	//Setting the renderer's clear color to whit
 	SDL_SetRenderDrawColor(gwRenderer, 0x00, 0x00, 0x00, 0xFF);
 
-	/* maybe needed for later.......................................
 	//Initializing the SDL_image library and handling initialization errors
 	int flags = IMG_INIT_PNG;
 	if(!(IMG_Init(flags) & flags)) {
@@ -91,6 +96,7 @@ bool GameWindow::Init() {
 		return false;
 	}
 
+	/*
 	//Initializing the SDL_ttf library and handling initialization errors
 	if(TTF_Init() == -1) {
 
@@ -98,34 +104,43 @@ bool GameWindow::Init() {
 		return false;
 	}
 	*/
+
 	//return true if no errors occurred during initialization
 	return true;
+
 }
 
 void GameWindow::blackScreen() {
+
 	if (gwInitialized == true) {
+
 		SDL_FillRect(gwSurface, NULL, SDL_MapRGB(gwSurface->format, 0x00, 0x00, 0x00));
 		SDL_UpdateWindowSurface(gwWindow);
+
 	}
 
 	else {
-		printf("SDL Window Initialization Error: Window and or Surface needs to be Initialized before updating it...");
-	}
-}
 
-void GameWindow::KeepWindowOpen() {
-	while (quitGame == false) {
-		while (SDL_PollEvent(&eventCapture)) {
-			if (eventCapture.type == SDL_QUIT)
-				quitGame = true;
-		}
+		printf("SDL Window Initialization Error: Window and or Surface needs to be Initialized before updating it...");
+
 	}
+	
 }
 
 SDL_Surface* GameWindow::getWindowSurface() {
+
 	return gwSurface;
+
 }
 
 SDL_Window* GameWindow::getWindow() {
+
 	return gwWindow;
+
+}
+
+SDL_Renderer* GameWindow::getRenderer() {
+
+	return gwRenderer;
+
 }

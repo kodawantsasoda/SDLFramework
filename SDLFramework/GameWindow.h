@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <SDL.h>
+#include <SDL_image.h>
 
 class GameWindow {
 
@@ -15,14 +16,14 @@ public:
 	const char* WINDOW_TITLE = "My Game";
 
 	static bool Initialized();
-	
-	void KeepWindowOpen();
 
 	void blackScreen();
 
 	SDL_Surface* getWindowSurface();
 
 	SDL_Window* getWindow();
+
+	SDL_Renderer* getRenderer();
 
 private:
 	GameWindow();
@@ -40,8 +41,6 @@ private:
 	SDL_Renderer* gwRenderer;
 
 	SDL_Surface* gwSurface;
-
-	SDL_Event eventCapture;
 
 	bool quitGame;
 

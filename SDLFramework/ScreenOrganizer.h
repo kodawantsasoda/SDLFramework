@@ -1,5 +1,6 @@
-#include "GameWindow.h"
-#include "Loader.h"
+
+#include "GameEssentials.h"
+
 #include <SDL_image.h>
 
 class ScreenOrganizer {
@@ -22,5 +23,11 @@ private:
 	GameWindow* masterWindow;
 
 	Loader* masterLoader;
+
+	GameEssentials* essentials;
+
+	SDL_Event eventCapture;
+
+	bool quitGame;
 
 };

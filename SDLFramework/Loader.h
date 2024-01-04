@@ -5,6 +5,7 @@
 //class that loads different forms of media
 class Loader {
 private:
+
 	static Loader* ldInstance;
 
 	Loader();
@@ -12,6 +13,8 @@ private:
 	~Loader();
 
 	static bool loadedMedia;
+
+	void surfaceReset();
 
 
 public:
@@ -21,7 +24,9 @@ public:
 
 	static void Release();
 
-	static void loadSomeMedia(std::string path);
+	void loadBMPMedia(std::string path);
+
+	void loadTexture(std::string path);
 
 	static SDL_Surface* pathToSurface;
 
