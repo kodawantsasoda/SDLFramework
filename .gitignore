@@ -361,3 +361,6 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+# Needed for property sheet not to interfere on other machines
+\SDLFramework\SDLFramework.vcxproj.filters
