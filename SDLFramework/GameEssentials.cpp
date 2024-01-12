@@ -85,3 +85,16 @@ void GameEssentials::renderTexture(std::string path) {
 
 }
 
+void GameEssentials::renderTexture(std::string path, int x, int y, int w, int h) {
+
+	bool viewPortRenderSuccess = GameWindow::Instance()->setRenderViewPort(x, y, w, h);
+
+	if (viewPortRenderSuccess == false) {
+
+		printf("The attempt to render texture with a viewport failed!");
+
+	}
+
+	renderTexture(path);
+
+}

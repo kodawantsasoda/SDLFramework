@@ -144,3 +144,26 @@ SDL_Renderer* GameWindow::getRenderer() {
 	return gwRenderer;
 
 }
+
+bool GameWindow::setRenderViewPort(int x, int y, int w, int h) {
+
+	if (gwInitialized == false) {
+
+		printf("SDL Error: The game window failed to initialize, therefore, the render viewport cannot be set.");
+
+		return false;
+
+	}
+
+	SDL_Rect viewPort;
+
+	viewPort.x = x;
+	viewPort.y = y;
+	viewPort.w = w;
+	viewPort.h = h;
+
+	SDL_RenderSetViewport(gwRenderer, &viewPort);
+
+	return true;
+
+}

@@ -25,6 +25,8 @@ public:
 
 	SDL_Renderer* getRenderer();
 
+	bool setRenderViewPort(int x, int y, int w, int h);
+
 private:
 	GameWindow();
 

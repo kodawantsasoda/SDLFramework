@@ -31,4 +31,6 @@ public:
 
 	void renderTexture(std::string path);
 
+	void renderTexture(std::string path, int x, int y, int w, int h);
+
 };
