@@ -29,6 +29,6 @@ public:
 
 	SDL_Texture* createTexture(std::string path);
 
-	void renderTexture();
+	void renderTexture(std::string path);
 
 };

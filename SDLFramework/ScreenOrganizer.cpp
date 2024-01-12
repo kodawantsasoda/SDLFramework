@@ -63,11 +63,13 @@ void ScreenOrganizer::ManageGameRun() {
 				
 				if (eventCapture.key.keysym.sym == SDLK_SPACE) {
 
-					essentials->createTexture("hello_world.bmp");
+					essentials->createTexture("chicken.jpg");
 
-					SDL_BlitSurface(masterLoader->pathToSurface, NULL, masterWindow->getWindowSurface(), NULL);
+					essentials->renderTexture("chicken.jpg");
 
-					SDL_UpdateWindowSurface(masterWindow->getWindow());
+					//SDL_BlitSurface(masterLoader->pathToSurface, NULL, masterWindow->getWindowSurface(), NULL);
+
+					//SDL_UpdateWindowSurface(masterWindow->getWindow());
 
 					SDL_ShowCursor(SDL_ENABLE);
 				}

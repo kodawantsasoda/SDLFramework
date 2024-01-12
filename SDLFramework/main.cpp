@@ -7,7 +7,6 @@
 int main(int argc, char* args[])
 {
 	ScreenOrganizer* game = ScreenOrganizer::Instance();
-	SDL_Surface* screenSurface = NULL;
 
 	//Destroy window
 	game->Release();

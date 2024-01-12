@@ -24,8 +24,6 @@ public:
 
 	static void Release();
 
-	void loadBMPMedia(std::string path);
-
 	void loadTexture(std::string path);
 
 	static SDL_Surface* pathToSurface;

@@ -39,12 +39,13 @@ GameEssentials::~GameEssentials() {
 
 }
 
-/*left off here..im trying to figure out a way where i can access GameWindowand Loader stuff(rendererand loader function) to create a texture
-* however.... I dont want confusing cross references either... I need to design it in a way where its easily navigable. I could have a big papa
-* parent class that uses stuff from all classes like my screenorganizer does... perhaps it should be done in there... I would make this class
-* use all the header files... But then we need to clean up screen organizer... maybe rename it GameTaker that takes from all other classes when
-neccessary, then I have another separate class called GameLoop that is where I include GameTaker so i can write everything I need to*/
 SDL_Texture* GameEssentials::createTexture(std::string path) {
+
+	if (collectionOfTextures[path]) {
+
+		return collectionOfTextures[path];
+
+	}
 
 	SDL_Texture* newTexture = NULL;
 
@@ -65,6 +66,22 @@ SDL_Texture* GameEssentials::createTexture(std::string path) {
 	}
 
 	return newTexture; 
+
+}
+
+void GameEssentials::renderTexture(std::string path) {
+
+	if (collectionOfTextures[path] == NULL) {
+
+		printf("Error rendering texture: texture has not been created yet. Please call createTexture and ensure the path is correct.");
+
+	}
+
+	SDL_RenderClear(GameWindow::Instance()->getRenderer());
+
+	SDL_RenderCopy(GameWindow::Instance()->getRenderer(), collectionOfTextures[path], NULL, NULL);
+
+	SDL_RenderPresent(GameWindow::Instance()->getRenderer());
 
 }
 

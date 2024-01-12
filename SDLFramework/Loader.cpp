@@ -34,32 +34,6 @@ Loader::~Loader() {
 
 }
 
-void Loader::loadBMPMedia(std::string path) {
-
-	pathToSurface = NULL;
-
-	//Loading success flag
-	bool success = true;
-
-	//Load splash image
-	pathToSurface = SDL_LoadBMP(path.c_str());
-
-	if (pathToSurface == NULL){
-
-		printf("Uh oh! Can't load image %s! SDL Error: %s\n", path.c_str(), SDL_GetError());
-		success = false;
-
-	}
-	else {
-
-		printf("%s LOADED", path.c_str());
-
-	}
-
-	loadedMedia = success;
-
-}
-
 void Loader::loadTexture(std::string path) {
 
 	surfaceReset();
