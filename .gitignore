@@ -363,4 +363,4 @@ MigrationBackup/
 FodyWeavers.xsd
 
 # Needed for property sheet not to interfere on other machines
-\SDLFramework\SDLFramework.vcxproj.filters
+SDLFramework.vcxproj.filters
