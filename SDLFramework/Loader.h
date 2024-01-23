@@ -28,4 +28,6 @@ public:
 
 	static SDL_Surface* pathToSurface;
 
+	void setColorKey(SDL_Surface* surface, int flag, Uint32 key);
+
 };

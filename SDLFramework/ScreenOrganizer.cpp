@@ -66,13 +66,19 @@ void ScreenOrganizer::ManageGameRun() {
 					essentials->createTexture("chicken.jpg");
 
 					//centering chimken
-					essentials->renderTexture("chicken.jpg", (GameWindow::Instance()->SCREEN_WIDTH - 350) / 2, (GameWindow::Instance()->SCREEN_HEIGHT - 350) / 2, 350, 350);
+					essentials->setRenderViewport("chicken.jpg", (GameWindow::Instance()->SCREEN_WIDTH - 350) / 2, (GameWindow::Instance()->SCREEN_HEIGHT - 350) / 2, 350, 350);
+
+					essentials->renderTexture("chicken.jpg");
 
 					SDL_ShowCursor(SDL_ENABLE);
 
 				}
 			}	
 		}
+
+		essentials->Render();
+
 	}
+
 	
 }

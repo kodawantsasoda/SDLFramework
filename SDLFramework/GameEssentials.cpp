@@ -21,7 +21,14 @@ void GameEssentials::Release() {
 
 GameEssentials::GameEssentials() {
 
-	
+	currentTexture = NULL;
+
+	textureRect = NULL;
+
+	currentSurfaceWidth = 0;
+
+	currentSurfaceHeight = 0;
+
 }
 
 GameEssentials::~GameEssentials() {
@@ -37,38 +44,69 @@ GameEssentials::~GameEssentials() {
 
 	collectionOfTextures.clear();
 
+	SDL_DestroyTexture(currentTexture);
+	currentTexture = NULL;
+
+	currentSurfaceWidth = 0;
+
+	currentSurfaceHeight = 0;
+
+	textureRect = NULL;
+
 }
 
 SDL_Texture* GameEssentials::createTexture(std::string path) {
 
+	currentTexture = NULL;
+
+	textureRect = NULL;
+
+	currentSurfaceWidth = 0;
+
+	currentSurfaceHeight = 0;
+
 	if (collectionOfTextures[path]) {
+
+		setSurfaceDimensions();
 
 		return collectionOfTextures[path];
 
 	}
 
-	SDL_Texture* newTexture = NULL;
-
 	Loader::Instance()->loadTexture(path);
 
 	if (Loader::Instance()->loaded() == true) {
 
-		newTexture = SDL_CreateTextureFromSurface(GameWindow::Instance()->getRenderer(), Loader::pathToSurface);
+		currentTexture = SDL_CreateTextureFromSurface(GameWindow::Instance()->getRenderer(), Loader::pathToSurface);
 
-		collectionOfTextures[path] = newTexture;
+		if (currentTexture == NULL) {
+
+			printf("SDL Error: could not create texture from renderer and/or surface!");
+
+			return NULL;
+
+		}
+
+		collectionOfTextures[path] = currentTexture;
 
 	}
 
 	else {
 
-		printf("SDL ERROR: Could not create texture!");
+		printf("SDL ERROR: Could not create texture by loading!");
 
 	}
 
-	return newTexture; 
+	setSurfaceDimensions();
+
+	//i need to figure this out... hmmmm.... I get an after compilation error
+	//SDL_FreeSurface(Loader::Instance()->pathToSurface);
+
+	return currentTexture; 
 
 }
 
+//need to add SDL_Rect to RenderCopy
 void GameEssentials::renderTexture(std::string path) {
 
 	if (collectionOfTextures[path] == NULL) {
@@ -77,15 +115,19 @@ void GameEssentials::renderTexture(std::string path) {
 
 	}
 
+	else {
+		printf("pap-a");
+	}
+
 	SDL_RenderClear(GameWindow::Instance()->getRenderer());
 
+	//**note textureRect = NULL if renderTexture(path, x, y) or renderTexture(path, x, y, w, h were not called
 	SDL_RenderCopy(GameWindow::Instance()->getRenderer(), collectionOfTextures[path], NULL, NULL);
-
-	SDL_RenderPresent(GameWindow::Instance()->getRenderer());
 
 }
 
-void GameEssentials::renderTexture(std::string path, int x, int y, int w, int h) {
+//need to add sdl rect 1/14
+void GameEssentials::setRenderViewport(std::string path, int x, int y, int w, int h) {
 
 	bool viewPortRenderSuccess = GameWindow::Instance()->setRenderViewPort(x, y, w, h);
 
@@ -95,6 +137,57 @@ void GameEssentials::renderTexture(std::string path, int x, int y, int w, int h)
 
 	}
 
-	renderTexture(path);
+}
+
+int GameEssentials::getCurrentSurfaceWidth() {
+
+	return currentSurfaceWidth;
 
 }
+
+int GameEssentials::getCurrentSurfaceHeight() {
+
+	return currentSurfaceHeight;
+
+}
+
+void GameEssentials::setSurfaceDimensions() {
+
+	currentSurfaceWidth = Loader::pathToSurface->w;
+
+	currentSurfaceHeight = Loader::pathToSurface->h;
+
+}
+
+void GameEssentials::setSurfaceDimensions(int w, int h) {
+
+	textureRect = NULL;
+
+	currentSurfaceWidth = w;
+
+	currentSurfaceHeight = h;
+
+}
+
+void GameEssentials::setTextureRect(int x, int y, int w, int h) {
+
+	textureRect->x = x;
+	textureRect->y = y;
+
+	if (w != NULL && h != NULL) {
+
+		textureRect->w = getCurrentSurfaceWidth();
+		textureRect->h = getCurrentSurfaceHeight();
+
+	}
+	
+	//else w and h == NULL
+
+}
+
+void GameEssentials::Render() {
+
+	SDL_RenderPresent(GameWindow::Instance()->getRenderer());
+
+}
+

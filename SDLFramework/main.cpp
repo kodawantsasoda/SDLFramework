@@ -12,6 +12,7 @@ int main(int argc, char* args[])
 	game->Release();
 
 	//Quit SDL subsystems
+	IMG_Quit();
 	SDL_Quit();
 	return 0;
 }
