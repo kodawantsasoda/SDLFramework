@@ -42,11 +42,22 @@ ScreenOrganizer::~ScreenOrganizer() {
 
 }
 
-void ScreenOrganizer::imageToScreen(std::string path) {
+void ScreenOrganizer::addBeforeGameRun() {
+
+	//clips
+	SDL_Rect temp;
+	temp.x = 100;
+	temp.y = 100;
+	temp.w = 150;
+	temp.h = 350;
+
+	collectionOfClippedRects["Chicken"] = temp;
 
 }
 
 void ScreenOrganizer::ManageGameRun() {
+
+	addBeforeGameRun();
 
 	masterWindow->blackScreen();
 	
@@ -63,12 +74,14 @@ void ScreenOrganizer::ManageGameRun() {
 				
 				if (eventCapture.key.keysym.sym == SDLK_SPACE) {
 
-					essentials->createTexture("chicken.jpg");
+					essentials->createOrReturnPreviousTexture("chicken.jpg");
 
 					//centering chimken
-					essentials->setRenderViewport("chicken.jpg", (GameWindow::Instance()->SCREEN_WIDTH - 350) / 2, (GameWindow::Instance()->SCREEN_HEIGHT - 350) / 2, 350, 350);
+					//essentials->setRenderViewport((GameWindow::Instance()->SCREEN_WIDTH - 350) / 2, (GameWindow::Instance()->SCREEN_HEIGHT - 350) / 2, 350, 350);
 
-					essentials->renderTexture("chicken.jpg");
+					essentials->renderTexture("chicken.jpg", (GameWindow::Instance()->SCREEN_WIDTH - 150) / 2, (GameWindow::Instance()->SCREEN_HEIGHT - 350) / 2, &collectionOfClippedRects["Chicken"]);
+
+					//essentials->renderTexture("chicken.jpg");
 
 					SDL_ShowCursor(SDL_ENABLE);
 

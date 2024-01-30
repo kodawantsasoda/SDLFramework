@@ -23,7 +23,7 @@ GameEssentials::GameEssentials() {
 
 	currentTexture = NULL;
 
-	textureRect = NULL;
+	textureRect = new SDL_Rect();
 
 	currentSurfaceWidth = 0;
 
@@ -53,29 +53,29 @@ GameEssentials::~GameEssentials() {
 
 	textureRect = NULL;
 
+	delete textureRect;
+
 }
 
-SDL_Texture* GameEssentials::createTexture(std::string path) {
+SDL_Texture* GameEssentials::createOrReturnPreviousTexture(std::string path) {
 
 	currentTexture = NULL;
-
-	textureRect = NULL;
 
 	currentSurfaceWidth = 0;
 
 	currentSurfaceHeight = 0;
 
-	if (collectionOfTextures[path]) {
-
-		setSurfaceDimensions();
-
-		return collectionOfTextures[path];
-
-	}
-
 	Loader::Instance()->loadTexture(path);
 
 	if (Loader::Instance()->loaded() == true) {
+
+		if (collectionOfTextures[path]) {
+
+			setSurfaceDimensions();
+
+			return collectionOfTextures[path];
+
+		}
 
 		currentTexture = SDL_CreateTextureFromSurface(GameWindow::Instance()->getRenderer(), Loader::pathToSurface);
 
@@ -106,7 +106,7 @@ SDL_Texture* GameEssentials::createTexture(std::string path) {
 
 }
 
-//need to add SDL_Rect to RenderCopy
+//this renders the ENTIRE texture. SDL_Render
 void GameEssentials::renderTexture(std::string path) {
 
 	if (collectionOfTextures[path] == NULL) {
@@ -115,19 +115,45 @@ void GameEssentials::renderTexture(std::string path) {
 
 	}
 
-	else {
-		printf("pap-a");
-	}
-
 	SDL_RenderClear(GameWindow::Instance()->getRenderer());
 
-	//**note textureRect = NULL if renderTexture(path, x, y) or renderTexture(path, x, y, w, h were not called
 	SDL_RenderCopy(GameWindow::Instance()->getRenderer(), collectionOfTextures[path], NULL, NULL);
 
 }
 
-//need to add sdl rect 1/14
-void GameEssentials::setRenderViewport(std::string path, int x, int y, int w, int h) {
+void GameEssentials::renderTexture(std::string path, int x, int y, SDL_Rect* clipRect) {
+
+	if (collectionOfTextures[path] == NULL) {
+
+		printf("Error rendering texture: texture has not been created yet. Please call createTexture and ensure the path is correct.");
+
+	}
+
+	//needed to load the texture up with its dimensions
+	createOrReturnPreviousTexture(path);
+
+	//if we are clipping the texture, we should set the width and height as the same dimensions for destination rectangle and source rectangle
+	if (clipRect != NULL) {
+
+		setTextureRect(x, y, clipRect->w, clipRect->h);
+		printf("papa");
+
+	}
+
+	else {
+
+		setTextureRect(x, y);
+
+	}
+
+	SDL_RenderClear(GameWindow::Instance()->getRenderer());
+
+	//remember; the paraeters of SDL_RenderCopy is the renderer, the texture, the source rectangle, and the destination rectangle
+	SDL_RenderCopy(GameWindow::Instance()->getRenderer(), collectionOfTextures[path], clipRect, textureRect);
+
+}
+
+void GameEssentials::setRenderViewport(int x, int y, int w, int h) {
 
 	bool viewPortRenderSuccess = GameWindow::Instance()->setRenderViewPort(x, y, w, h);
 
@@ -153,15 +179,9 @@ int GameEssentials::getCurrentSurfaceHeight() {
 
 void GameEssentials::setSurfaceDimensions() {
 
-	currentSurfaceWidth = Loader::pathToSurface->w;
+	int w, h;
 
-	currentSurfaceHeight = Loader::pathToSurface->h;
-
-}
-
-void GameEssentials::setSurfaceDimensions(int w, int h) {
-
-	textureRect = NULL;
+	SDL_QueryTexture(currentTexture, NULL, NULL, &w, &h);
 
 	currentSurfaceWidth = w;
 
@@ -174,14 +194,22 @@ void GameEssentials::setTextureRect(int x, int y, int w, int h) {
 	textureRect->x = x;
 	textureRect->y = y;
 
-	if (w != NULL && h != NULL) {
+	//if NULL, default the rectangle to the size of the surface
+	if (w == NULL || h == NULL) {
 
 		textureRect->w = getCurrentSurfaceWidth();
 		textureRect->h = getCurrentSurfaceHeight();
 
 	}
-	
-	//else w and h == NULL
+
+	//this will be used more often than not to handle clipped textures
+	else {
+
+		printf("Here");
+		textureRect->w = w;
+		textureRect->h = h;
+
+	}
 
 }
 

@@ -139,14 +139,20 @@
     <ClCompile Include="GameWindow.cpp" />
     <ClCompile Include="Loader.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Entity.cpp" />
+    <ClCompile Include="Render.cpp" />
     <ClCompile Include="ScreenOrganizer.cpp" />
     <ClCompile Include="GameEssentials.cpp" />
+    <ClCompile Include="Texture.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameWindow.h" />
     <ClInclude Include="Loader.h" />
+    <ClInclude Include="Entity.h" />
+    <ClInclude Include="Render.h" />
     <ClInclude Include="ScreenOrganizer.h" />
     <ClInclude Include="GameEssentials.h" />
+    <ClInclude Include="Texture.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

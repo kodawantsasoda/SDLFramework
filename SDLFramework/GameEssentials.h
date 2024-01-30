@@ -25,8 +25,6 @@ private:
 
 	void setSurfaceDimensions();
 
-	void setSurfaceDimensions(int w, int h);
-
 	SDL_Rect* textureRect;
 
 	void setTextureRect(int x, int y, int w = NULL, int h = NULL);
@@ -41,12 +39,16 @@ public:
 
 	SDL_Texture* currentTexture;
 
-	SDL_Texture* createTexture(std::string path);
+	SDL_Texture* createOrReturnPreviousTexture(std::string path);
 
+	//render full texture
 	void renderTexture(std::string path);
 
+	//render clipped texture
+	void renderTexture(std::string path, int x, int y, SDL_Rect* clipRect);
+
 	//custom width and height option for texture
-	void setRenderViewport(std::string path, int x, int y, int w, int h);
+	void setRenderViewport(int x, int y, int w, int h);
 
 	int getCurrentSurfaceWidth();
 
